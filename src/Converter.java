@@ -1,12 +1,12 @@
 public class Converter {
-    double lengthOfStep = 75.0 / 100;
-    double kkalPerStep = 1 * 50.0 / 1000;
+    private static final double LENGTH_OF_STEP = 75.0 / 100;
+    private static final double K_KAL_PER_STEP = 1 * 50.0 / 1000;
 
     double distance(int sum) {
-        return sum * lengthOfStep;
+        return sum * LENGTH_OF_STEP;
     }
 
-    double getKkal(int sum) {
-        return sum * kkalPerStep;
+    double getKKal(int sum) {
+        return sum * K_KAL_PER_STEP;
     }
 }

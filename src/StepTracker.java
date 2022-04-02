@@ -1,22 +1,24 @@
 import java.util.Scanner;
 
 public class StepTracker {
-    Scanner sc = new Scanner(System.in);
-    int goal = 10_000;
-    int[][] step = new int[12][31];
-    int sum = 0;
+    private static final int MONTH_COUNT = 12;
+    private static final int DAYS_IN_MONTH_COUNT = 30;
+    private final Scanner sc = new Scanner(System.in);
+    private int goal = 10_000;
+    private final int[][] step = new int[MONTH_COUNT][DAYS_IN_MONTH_COUNT];
+    private int sum = 0;
 
     void inputDataAndSteps() {
         while (true) {
             printMonth();
             int month = sc.nextInt();
-            while (month < 0 || month > 11) {
+            while (month < 0 || month > MONTH_COUNT - 1) {
                 System.out.println("Вы неправильно указали номер. Повторите ввод (от 0 до 11)");
                 month = sc.nextInt();
             }
             System.out.println("Укажите день, за который вы хотите ввести количество шагов (от 1 до 30)");
             int day = sc.nextInt();
-            while (day < 1 || day > 30) {
+            while (day < 1 || day > DAYS_IN_MONTH_COUNT) {
                 System.out.println("Такого дня не существует. Повторите ввод (от 1 до 30)");
                 day = sc.nextInt();
             }
@@ -36,7 +38,7 @@ public class StepTracker {
         }
     }
 
-    static void printMonth() {
+    void printMonth() {
         System.out.println("Укажите номер месяца");
         System.out.println("0-январь");
         System.out.println("1-февраль");
@@ -66,11 +68,11 @@ public class StepTracker {
         printMonth();
         int month = sc.nextInt();
         int max = 0;
-        while (month < 0 || month > 11) {
+        while (month < 0 || month > MONTH_COUNT - 1) {
             System.out.println("Вы неправильно указали номер. Повторите ввод (от 0 до 11)");
             month = sc.nextInt();
         }
-        for (int j = 0; j < 30; j++) {
+        for (int j = 0; j < step[month].length; j++) {
             if (max < step[month][j]) {
                 max = step[month][j];
             }
@@ -80,17 +82,17 @@ public class StepTracker {
 
         System.out.println("Общее количество шагов за месяц - " + sum);
         System.out.println("Максимальное пройденное количество шагов в месяце - " + max);
-        System.out.println("Среднее количество шагов - " + (sum / 30.0));
+        System.out.println("Среднее количество шагов - " + (sum / (double) DAYS_IN_MONTH_COUNT));
         Converter converter = new Converter();
         System.out.println("Пройденная дистанция (в км) - " + converter.distance(sum));
-        System.out.println("Количество сожжённых килокалорий - " + converter.getKkal(sum));
+        System.out.println("Количество сожжённых килокалорий - " + converter.getKKal(sum));
         getMaxGoalDays(month);
     }
 
     void getMaxGoalDays(int month) {
         int maxK = 0;
         int k = 0;
-        for (int j = 0; j < 30; j++) {
+        for (int j = 0; j < step[month].length; j++) {
             if (step[month][j] >= goal) {
                 k = k + 1;
                 if (maxK < k) {
